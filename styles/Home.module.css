@@ -1,4 +1,36 @@
+
+/* -------------------------------------------flex basis */
+
 .main {
+   
+   padding: 4rem 0;}
+
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.logoBarContainer {
+  flex-basis: 15%;
+  background-color: #61b923;
+ 
+}
+
+.tweetContainer {
+  flex-basis: 40%;
+  background-color: #e57f7f;
+  
+}
+
+.trendContainer {
+  flex-basis: 35%;
+  background-color: #1638a1;
+  
+}
+/* -------------------------------------------flex basis*/
+
+/* .main {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,4 +51,4 @@
 
 .title a:hover, .title a:focus, .title a:active {
   text-decoration: underline;
-}
+} */
