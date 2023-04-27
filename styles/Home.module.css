@@ -35,11 +35,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  padding: 4rem 0;
+  height: 100vh;
 }
 
-.title {
+/* .title {
   line-height: 1.15;
   font-size: 4rem;
 }
