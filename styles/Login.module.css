@@ -1,0 +1,159 @@
+/* PAGE ENTIERE */
+.pageContainer {
+    display: grid;
+    grid-template-rows: repeat(12, 1fr);
+    grid-template-columns: repeat(12, 1fr);
+    width: 100%;
+    height: 100%;
+}
+
+/* GAUCHE */
+
+.partieGauche {
+    background-image: url("../public/background.jpeg");
+    background-position: left 200px bottom;
+    background-size: 200%;
+    display: flex;
+    grid-row-start: 1;
+    grid-row-end: 13;
+    grid-column-start: 1;
+    grid-column-end: 6;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoGaucghe {
+    display: flex; 
+    height: 30%;
+    width: 200px;
+}
+
+
+
+/* DROITE */
+
+
+/* ensemble */
+.partieDroite {
+    display: flex;
+    grid-row-start: 1;
+    grid-row-end: 13;
+    grid-column-start: 6;
+    grid-column-end: 13;
+    background-color: #1C2833;
+}
+
+
+/* info container */
+.loginContainer {
+    display: flex;
+    grid-row-start: 1;
+    grid-row-end: 13;
+    grid-column-start: 6;
+    grid-column-end: 8;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding-right: 300px;
+}
+
+.logoDroite {
+    display: flex;
+    height: 70px;
+    width: 70px;
+    margin: 30px 0px 60px 30px;
+}
+
+.title {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    color: white;
+    margin-left: 30px;
+    font-size: 60px;
+    /* padding-right: 180px; */
+    font-family: Verdana;
+}
+
+.connectionContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+}
+
+.h2 {
+    font-size: 25px;
+    color: white;
+    font-family: Verdana;
+}
+
+.h3 {
+    font-size: 15px;
+    color: white;
+    font-family: Verdana;
+    margin-top: 15px;
+}
+
+
+.signUp {
+    font-family: Roboto, sans-serif;
+    font-weight: 0;
+    font-size: 14px;
+    color: #fff;
+    background-color: #0066CC;
+    padding: 10px 30px;
+    border: solid #ffffff 1px;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+    border-radius: 50px;
+    transition : 1000ms;
+    transform: translateY(0);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 150px;
+}
+
+.signUp:hover{
+    transition : 1000ms;
+    padding: 10px 50px;
+    transform : translateY(-0px);
+    background-color: #1C2833;
+    color: #fff;
+    border: solid 1px #fff;
+}
+
+.signIn {
+    font-family: Roboto, sans-serif;
+    font-weight: 0;
+    font-size: 14px;
+    color: #0066CC;
+    background-color: #fff;
+    padding: 10px 30px;
+    border: solid #0066CC 1px;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+    border-radius: 50px;
+    transition : 1000ms;
+    transform: translateY(0);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 150px;
+}
+
+.signIn:hover{
+    transition : 1000ms;
+    padding: 10px 50px;
+    transform : translateY(-0px);
+    background-color: #1C2833;
+    color: #fff;
+    border: solid 1px #fff;
+}
+
+/* MODALS SIGN UP */
+.modalSignUp {
+    background-color: #1C2833;
+}
