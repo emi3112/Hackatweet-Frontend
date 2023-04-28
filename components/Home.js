@@ -1,7 +1,7 @@
 import React from "react";
 import '../styles/Home.module.css';
 import styles from '../styles/Home.module.css'
-import Tweet from '../components/Tweet'
+import LastTweets from '../components/LastTweets'
 
 
 const Home = () => {
@@ -16,7 +16,7 @@ const Home = () => {
     </div>
     <div className={styles.tweetContainer}>
     <h1>tweetContainer!</h1>
-    <Tweet />
+    <LastTweets/>
     
     </div>
     <div className={styles.trendContainer}>
