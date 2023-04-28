@@ -8,10 +8,10 @@ export const likesSlice = createSlice({
 	name: 'likes',
 	initialState,
 	reducers: {
-		addLike: (state, action) => {
+		addLikeStore: (state, action) => {
 			state.value.push(action.payload);
 		},
-		removeLike: (state, action) => {
+		removeLikeStore: (state, action) => {
 			state.value = state.value.filter(
                 like => like.title !== action.payload.title);
 		},

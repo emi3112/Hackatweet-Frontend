@@ -1,31 +1,32 @@
+import React from "react";
 import styles from "../styles/Tweet.module.css";
 
 // import { } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faHeart, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
-function Tweet(props) {
+export function Tweet({ id, name, content, like, onDelete }) {
+ 
+  
+  //const [count, setCount] = useState(0);
+
+  let newLike = { name, id, like, content };
+
+  const onLike = (newLike) => {
+    dispatch(addLikeStore(newLike));
+    console.log("like", name, id, like);
+  };
+
   return (
-    <div className={styles.dark}>
-      <div className={styles.tweetHeader}>
-        <h3>user@login - titletweet</h3>
-      </div>
-      <div>
-        <p>Contenu tweet</p>
-      </div>
-      <div></div>
-      <div>
-        <footer>
-          <FontAwesomeIcon 
-          icon={faHeart} 
-          className={styles.faHeartIcon}/>
-          <FontAwesomeIcon
-            icon={faTrashCan}
-            className={styles.faTrashCanIcon}/>
-        </footer>
-      </div>
+    <div className="tweet">
+      <h3>{name}</h3>
+      <p>{content}</p>
+      <footer className="footer_btn">
+        <button className="Like" onClick={() => onLike()}>{like} count  💛</button>
+        <button className="delete" onClick={() => onDelete(id)}>
+          🎚️
+        </button>
+      </footer>
     </div>
   );
 }
-
-export default Tweet;

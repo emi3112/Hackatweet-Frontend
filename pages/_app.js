@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { Provider } from 'react-redux';
 import likes from '../reducers/liketweets'
 import user from '../reducers/user';
+import likes from '../reducers/liketweets';
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import storage from 'redux-persist/lib/storage';

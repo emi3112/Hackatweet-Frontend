@@ -15,7 +15,7 @@
 	background-color: rgb(233, 190, 89);
 	margin: 15px 0px 15px 0px
 }
-.iconStyle {}
+
 .tweetHeader {
 	display: flex;
 	justify-content: space-between;
@@ -28,7 +28,22 @@
 
 .bookmarkIcon:hover {
 	opacity: 0.6;
-}
+	}
+.tweet  {
+		background-color: #24B7F0;
+		}
+.footer_btn {
+  display: flex;
+  flex-direction: row;
+    }
+
+.tweet delete {
+    position: absolute;
+   left: 0;
+   top: 0;
+   background: none;
+   cursor: pointer;
+    }
 
 /* heart */
 
