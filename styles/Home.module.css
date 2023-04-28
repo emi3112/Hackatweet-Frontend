@@ -145,11 +145,12 @@ border: solid 2px #1C2833;
 .postTweet {
   display: flex;
   flex-direction: column;
-  justify-content: stretch;
+  padding: 10px 30px;
+  height: 100px;
 }
 
+/* BUTTON */
 .tweetButton{
-
 font-family: Roboto, sans-serif;
 font-weight: bold;
 font-size: 14px;
@@ -168,11 +169,15 @@ cursor: pointer;
 }
 
 .tweetButton:hover{
-
 transition : 1000ms;
 padding: 8px 20px;
 transform : translateY(-0px);
 background-color: #fff;
 color: #0066cc;
 border: solid 2px #0066cc;
+}
+.divButton {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 25px;
 }

@@ -59,9 +59,11 @@ function Home() {
       <h2 className={styles.titles}>Home</h2>
       <div className={styles.postTweet}>
         {/* Création tweets BUTTON = TWeet / 280 caractère max / ecriture What's up  */}
-        <TextArea showCount maxLength={100} />
+        <TextArea maxLength={280}/>
       </div>
+      <div className={styles.divButton}>
         <button className={styles.tweetButton}>Tweet</button>
+      </div>
       {/* <Tweet /> */}
     </div>
     <div className={styles.trendContainer}>
