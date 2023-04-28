@@ -3,6 +3,9 @@ import styles from '../styles/SignIn.module.css'
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {login, logout} from '../reducers/user'
+import Link from 'next/link';
+import { useRouter } from 'next/router'
+
 
 function SignInModal() {
 
@@ -13,6 +16,8 @@ function SignInModal() {
     const [signInUsername, setSignInUsername] = useState('');
 	const [signInPassword, setSignInPassword] = useState('');
 
+    const router = useRouter()
+
     const handleSignIn = () => {
         console.log('Click connect')
         fetch('http://localhost:3000/users/signin', {
@@ -22,9 +27,11 @@ function SignInModal() {
 		}).then(response => response.json())
 			.then(data => {
 				if (data.result) {
+                    console.log(data)
 					dispatch(login({ username: signInUsername, token: data.token }));
 					setSignInUsername('');
 					setSignInPassword('');
+                    router.push('/home')				
 				}
 			});
     }

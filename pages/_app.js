@@ -2,13 +2,14 @@ import '../styles/globals.css';
 import Head from 'next/head';
 
 import { Provider } from 'react-redux';
+import likes from '../reducers/liketweets'
 import user from '../reducers/user';
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import storage from 'redux-persist/lib/storage';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-const reducers = combineReducers({likes,user});
+const reducers = combineReducers({likes ,user});
 const persistConfig = { key: 'applicationName', storage };
 
 

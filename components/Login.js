@@ -5,15 +5,14 @@ import styles from '../styles/Login.module.css'
 import {  Modal } from 'antd';
 import SignUp from '../components/SignUp'
 import SignIn from '../components/SignIn'
+import Link from 'next/link';
+
 
 
 
 function Login() {
 
     const [modalSignIn, setModalSignIn] = useState(false);
-
-
-    // --------------------------------------------------------- Modal content avec SignUp -----------------------------------------------------------------
     const [modalSignUp, setModalSignUp] = useState(false);
 
     const handleModalSignUp = () => {
