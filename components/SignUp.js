@@ -3,6 +3,9 @@ import styles from '../styles/SignUp.module.css'
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {login, logout} from '../reducers/user'
+import Link from 'next/link';
+import { useRouter } from 'next/router'
+
 
 
 function SignUpModal() {
@@ -15,6 +18,8 @@ function SignUpModal() {
     const [signUpUsername, setSignUpUsername] = useState('');
 	const [signUpPassword, setSignUpPassword] = useState('');
 
+    const router = useRouter()
+
 
     const handleSignUp = () => {
         console.log('Click connect')
@@ -25,11 +30,13 @@ function SignUpModal() {
 		}).then(response => response.json())
 			.then(data => {
 				if (data.result) {
+                    console.log(data)
 					dispatch(login({ username: signUpUsername, token: data.token }));
                     setSignUpFirstname('')
 					setSignUpUsername('');
 					setSignUpPassword('');
-				}
+                    router.push('/home')				
+                }
 			});
     }
 
@@ -46,7 +53,7 @@ function SignUpModal() {
 					<input className={styles.signUpInput} type="text" placeholder="Firstame" id="signUpFirstame" onChange={(e) => setSignUpFirstname(e.target.value)} value={signUpFirstname}/>
 					<input className={styles.signUpInput} type="text" placeholder="Username" id="signUpUsername" onChange={(e) => setSignUpUsername(e.target.value)} value={signUpUsername}/>
                     <input className={styles.signUpInput} type="password" placeholder="Password" id="signUpPassword" onChange={(e) => setSignUpPassword(e.target.value)} value={signUpPassword}/>
-					<button className={styles.signUpButton} id="register" onClick={() => handleSignUp()}>Sign Up</button>
+					<button className={styles.signUpButton}  href="/home" onClick={() => handleSignUp()}>Sign Up</button>
 				</div>
         </div>
     )
