@@ -8,9 +8,10 @@ import styles from "../styles/Tweet.module.css";
 export function Tweet({ id, name, content, like, onDelete }) {
  
   
-  const [count, setCount] = useState(0);
+  //const [count, setCount] = useState(0);
 
   let newLike = { name, id, like, content };
+
   const onLike = (newLike) => {
     dispatch(addLikeStore(newLike));
     console.log("like", name, id, like);
@@ -21,7 +22,7 @@ export function Tweet({ id, name, content, like, onDelete }) {
       <h3>{name}</h3>
       <p>{content}</p>
       <footer className="footer_btn">
-        <button className="Like" onClick={() => onLike()}>{like} count {count} 💛</button>
+        <button className="Like" onClick={() => onLike()}>{like} count  💛</button>
         <button className="delete" onClick={() => onDelete(id)}>
           🎚️
         </button>
