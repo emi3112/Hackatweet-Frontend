@@ -1,9 +1,7 @@
 import React from "react";
 import '../styles/Home.module.css';
 import styles from '../styles/Home.module.css'
-<<<<<<< HEAD
 import LastTweets from '../components/LastTweets'
-=======
 import Tweet from '../components/Tweet';
 import Image from 'next/image';
 import { logout } from "../reducers/user";
@@ -11,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router'
 import { Input } from 'antd';
 const { TextArea } = Input;
->>>>>>> 2156d5aa83a8349c54a29bfefc116a4e4d655612
 
 
 function Home() {
@@ -60,11 +57,6 @@ function Home() {
       </div>
     </div>
     <div className={styles.tweetContainer}>
-<<<<<<< HEAD
-    <h1>tweetContainer!</h1>
-    <LastTweets/>
-    
-=======
       <h2 className={styles.titles}>Home</h2>
       <div className={styles.postTweet}>
         {/* Création tweets BUTTON = TWeet / 280 caractère max / ecriture What's up  */}
@@ -74,7 +66,6 @@ function Home() {
         <button className={styles.tweetButton}>Tweet</button>
       </div>
       {/* <Tweet /> */}
->>>>>>> 2156d5aa83a8349c54a29bfefc116a4e4d655612
     </div>
     <div className={styles.trendContainer}>
     <h2 className={styles.titles}>Trends</h2>
