@@ -15,14 +15,11 @@ export const hashtagsSlice = createSlice({
 		deleteHastags: (state) => {
 			state.value = []
 		},
-		addhashtag: (state, action) => {
-			state.value.unshift(action.payload)
-		},
 		removeHastag: (state, action) => {
 			state.value = state.value.filter((e) => e.name !== action.payload);
 		}
 	},
 });
 
-export const { addhashtag, importHashtags, deleteHastags, removeHastag } = hashtagsSlice.actions;
+export const { importHashtags, deleteHastags, removeHastag } = hashtagsSlice.actions;
 export default hashtagsSlice.reducer;

@@ -11,7 +11,7 @@ const { TextArea } = Input;
 import { useEffect, useState } from 'react';
 import { addTweet, importTweet, removeLikeStore, deleteTweet } from "../reducers/tweets";
 import Hashtag from "../components/Hashtag";
-import { importHashtags ,addhashtag, deleteHastags } from "../reducers/hashtags";
+import { importHashtags, deleteHastags } from "../reducers/hashtags";
 
 
 function Home() {
@@ -38,6 +38,18 @@ function Home() {
     dispatch(deleteHastags())
     dispatch(logout())
     router.push('/')				
+  }
+
+  // fonction qui fetch les hashtags !!!!!!!!!!!!!!!! à mettre dans un ficher a part avec les autres fonction fetch
+  const fetchHashtags = () => {
+    fetch(`http://localhost:3000/hashtags/allHashtags`).then(response => response.json())
+    .then(data => {
+      if (data.result) {
+        const hashtags = data.hashtags
+        console.log('hashtags data from fetch ==>',hashtags)
+        dispatch(importHashtags(hashtags))
+      }
+    });
   }
 
   // HANDLE POST TWEET 
@@ -69,6 +81,7 @@ function Home() {
       if (data.result) {
         // traitement regex hashtag quand post tweet
         if(handleHashtag(data.tweet.text)) {
+          // # isolé qui est post
           const name = handleHashtag(data.tweet.text)
           fetch('http://localhost:3000/hashtags/newHashtag', {
             method: 'POST',
@@ -76,16 +89,30 @@ function Home() {
             body: JSON.stringify({ name }),
           }).then(response => response.json())
           .then(data => {
-            dispatch(addhashtag(data.hashtag))
+            fetchHashtags()
           })
         }
       }
+      // ajoute le tweet dans le reducer (a clean par la suite)
       dispatch(addTweet(data.tweet))
     })
+    // met le text de l'input a vide après le post
     setTextTweet('')
   };
   
+  // qaund init composant
+  useEffect(() => {
+    fetchHashtags()
+  }, []);
   
+  const allHashtags = useSelector((state) => state.hashtags.value)
+  console.log('all hashtags from reducer ==> ', allHashtags)
+  // composants hashtags sur allhashtags
+  const hashatgs = allHashtags?.map((data, i) => {
+      return <Hashtag key={i} {...data} />
+  })
+  
+
 // HANDLE ALL TWEET
   const allTweets = useSelector((state) => state.tweets.value)
 
@@ -109,25 +136,6 @@ function Home() {
   })
 
   
-  // HANDLE HASHTAGS
-  useEffect(() => {
-    fetch(`http://localhost:3000/hashtags/allHashtags`).then(response => response.json())
-    .then(data => {
-      if (data.result) {
-        const hashtags = data.hashtags
-        console.log('hashtags data from fetch ==>',hashtags)
-        dispatch(importHashtags(hashtags))
-      }
-    });
-    // mettre une écoute sur alltweets pour refresh les hashtags
-  }, [allTweets.length]);
-  
-  const allHashtags = useSelector((state) => state.hashtags.value)
-  console.log('all hashtags from reducer ==> ', allHashtags)
-  // composants hashtags sur allhashtags
-  const hashatgs = allHashtags?.map((data, i) => {
-      return <Hashtag key={i} {...data} />
-  })
   
 
    return (

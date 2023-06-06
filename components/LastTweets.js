@@ -7,8 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { removeLikeStore } from '../reducers/tweets'
 import moment from "moment";
-import { removeHastag } from "../reducers/hashtags";
-
+import { importHashtags } from "../reducers/hashtags";
 
 
 function LastTweets(props) {
@@ -27,14 +26,23 @@ function LastTweets(props) {
     }
   }
 
+    // fonction qui fetch les hashtags !!!!!!!!!!!!!!!! à mettre dans un ficher a part avec les autres fonction fetch
+    const fetchHashtags = () => {
+      fetch(`http://localhost:3000/hashtags/allHashtags`).then(response => response.json())
+      .then(data => {
+        if (data.result) {
+          const hashtags = data.hashtags
+          dispatch(importHashtags(hashtags))
+        }
+      });
+    }
+
   // delete dans db et dans dom quand click on trash 
   const handleDelete = (tweet) => {
     const text = tweet.text
     // if true delete dans la db hashtags 
     if(handleHashtag(text)) {
       const hashtag = handleHashtag(text)
-      console.log('hashtag before fetch ==> ',hashtag)
-      console.log('CLICKK DELETE HASHTAG TWEET')
       fetch(`http://localhost:3000/tweets/delete`, { 
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
@@ -51,12 +59,12 @@ function LastTweets(props) {
             body: JSON.stringify({name: hashtag})
           }).then(response => response.json())
           .then(data => {
-            
+            // fetch les hashtags et import reducer
+            fetchHashtags()
           })
         }
       })
     } else {
-      console.log('CLICKK DELETE NORMAL TWEET')
       fetch(`http://localhost:3000/tweets/delete`, { 
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
@@ -71,7 +79,12 @@ function LastTweets(props) {
   }
 
   // gestion date 
-  const date = moment(props.date).format('DD/MM/YYYY')
+  const date = moment(props.date).format('LLL')
+
+  // handle likes
+  const likes = () => {
+    
+  }
 
 
   return (
