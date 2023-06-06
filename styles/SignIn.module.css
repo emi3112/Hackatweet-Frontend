@@ -40,12 +40,24 @@
     margin: 10px 0 20px 0;
 }
 
+
+@keyframes shake {
+    0%, 100% {translate: 0;}
+    25% {translate: 8px 0;}
+    75% {translate: -8px 0;}
+}
+
 .signInInput {
     margin: 5px 0 5px 0;
     height: 35px;
     width: 45%;
     border-radius: 5px;
     background-color: #1C2833;
+    animation: shake 0.14s 3;
+}
+
+.signInInput:valid {
+    animation: none;
 }
 
 .signInButton {
@@ -78,3 +90,8 @@
     border: solid 1px #fff;
 }
 
+.wrongUser {
+    color: red;
+    font-family: Verdana;
+    font-size: 12px;
+}

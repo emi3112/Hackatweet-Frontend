@@ -1,0 +1,34 @@
+.hashtags {
+    display: flex;
+    margin: 10px 10px;
+    height: 70px;
+    border-radius: 16px;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #273746;
+    /* opacity: 0.6; */
+}
+
+.hashtags:hover {
+    opacity: 0.6;
+}
+
+.hashtagInfos {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+.p1 {
+    font-weight: bold;
+    color: white;
+    font-size: 12px;
+    margin-bottom: 6px;
+    font-family: Verdana;
+}
+
+.p2 {
+    color: #566573;
+    font-size: 10px;
+    font-family: Verdana;
+}

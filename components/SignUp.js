@@ -17,29 +17,36 @@ function SignUpModal() {
     const [signUpFirstname, setSignUpFirstname] = useState('');
     const [signUpUsername, setSignUpUsername] = useState('');
 	const [signUpPassword, setSignUpPassword] = useState('');
+    const [isValidate, setIsValidate] = useState(true)
 
     const router = useRouter()
 
-
+    
     const handleSignUp = () => {
         console.log('Click connect')
         fetch('http://localhost:3000/users/signup', {
-			method: 'POST',
+            method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ firstname: signUpFirstname, username: signUpUsername, password: signUpPassword }),
 		}).then(response => response.json())
-			.then(data => {
-				if (data.result) {
-                    console.log(data)
-					dispatch(login({ username: signUpUsername, token: data.token }));
-                    setSignUpFirstname('')
-					setSignUpUsername('');
-					setSignUpPassword('');
-                    router.push('/home')				
+        .then(data => {
+            if (data.result) {
+                console.log(data)
+                dispatch(login({ username: signUpUsername, token: data.token }));
+                setSignUpFirstname('')
+                setSignUpUsername('');
+                setSignUpPassword('');
+                
+                setIsValidate(true)
+                router.push('/home')				
+            } else {
+                setIsValidate(!isValidate)
+                setSignUpFirstname('')
+                setSignUpUsername('');
+                setSignUpPassword('');
                 }
 			});
     }
-
 
     return (
         <div className={styles.modalSignUp}>
@@ -53,6 +60,7 @@ function SignUpModal() {
 					<input className={styles.signUpInput} type="text" placeholder="Firstame" id="signUpFirstame" onChange={(e) => setSignUpFirstname(e.target.value)} value={signUpFirstname}/>
 					<input className={styles.signUpInput} type="text" placeholder="Username" id="signUpUsername" onChange={(e) => setSignUpUsername(e.target.value)} value={signUpUsername}/>
                     <input className={styles.signUpInput} type="password" placeholder="Password" id="signUpPassword" onChange={(e) => setSignUpPassword(e.target.value)} value={signUpPassword}/>
+                    {!isValidate && <p className={styles.wrongUser}>User already exist or missing informations</p>}
 					<button className={styles.signUpButton}  href="/home" onClick={() => handleSignUp()}>Sign Up</button>
 				</div>
         </div>

@@ -1,5 +1,4 @@
 import React from "react";
-import '../styles/Home.module.css';
 import styles from '../styles/Home.module.css'
 import LastTweets from '../components/LastTweets'
 import Tweet from '../components/Tweet';
@@ -9,30 +8,126 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router'
 import { Input } from 'antd';
 const { TextArea } = Input;
+import { useEffect, useState } from 'react';
+import { addTweet, importTweet, removeLikeStore, deleteTweet } from "../reducers/tweets";
+import Hashtag from "../components/Hashtag";
+import { importHashtags ,addhashtag, deleteHastags } from "../reducers/hashtags";
 
 
 function Home() {
+  
+  const dispatch = useDispatch()
+  const router = useRouter()
 
+// HANDLE USER DATA
   const user = useSelector((state) => state.user.value)
-  console.log('USER DATA ==>', user)
 
   let username = null
   let firstname = null
-
+  let usernameDb = null
+  
   if(user.token && user.username) {
     firstname = user.token.firstname
     username = `@${user.username}` 
+    usernameDb = user.username
   }
-
-  const dispatch = useDispatch()
-
-  const router = useRouter()
-
+  
+  // LOGOUT
   const handleLogout = () => {
+    dispatch(deleteTweet())
+    dispatch(deleteHastags())
     dispatch(logout())
     router.push('/')				
   }
 
+  // HANDLE POST TWEET 
+  const [textTweet, setTextTweet] = useState('')
+  const counter = `${textTweet.length}/280`
+
+  // HANDLE HASHTAGS 
+  // regex pour trouver les hashtags
+  const hashtagsRegex = /#[a-z0-9_]+/
+
+  // fonction qui trouve l'hashtag
+  const handleHashtag = (newhashtag) => {
+    const test = hashtagsRegex.test(newhashtag)
+    if(test) {
+      const result = newhashtag.match(hashtagsRegex)
+        // return juste le hashatg du text 
+        return result[0]
+    }
+  }
+
+  // post new tweet in db 
+  const handleTweet = () => {
+    fetch('http://localhost:3000/tweets/newTweet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ firstname: firstname, username: usernameDb, date: null, text: textTweet, likes: 0 }),
+    }).then(response => response.json())
+    .then(data => {
+      if (data.result) {
+        // traitement regex hashtag quand post tweet
+        if(handleHashtag(data.tweet.text)) {
+          const name = handleHashtag(data.tweet.text)
+          fetch('http://localhost:3000/hashtags/newHashtag', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name }),
+          }).then(response => response.json())
+          .then(data => {
+            dispatch(addhashtag(data.hashtag))
+          })
+        }
+      }
+      dispatch(addTweet(data.tweet))
+    })
+    setTextTweet('')
+  };
+  
+  
+// HANDLE ALL TWEET
+  const allTweets = useSelector((state) => state.tweets.value)
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/tweets/allTweets/${usernameDb}`).then(response => response.json())
+    .then(data => {
+      if (data.result) {
+        const allTweets = data.allTweets
+        dispatch(importTweet(allTweets))
+      }
+    });
+	}, []);
+
+  // si my tweets with trash other no trash 
+  const tweets = allTweets?.map((data, i) => {
+    if(data.username === usernameDb) {
+      return <LastTweets key={i} {...data}/>
+    } else {
+      return <Tweet key={i} {...data}/>
+    }
+  })
+
+  
+  // HANDLE HASHTAGS
+  useEffect(() => {
+    fetch(`http://localhost:3000/hashtags/allHashtags`).then(response => response.json())
+    .then(data => {
+      if (data.result) {
+        const hashtags = data.hashtags
+        console.log('hashtags data from fetch ==>',hashtags)
+        dispatch(importHashtags(hashtags))
+      }
+    });
+    // mettre une écoute sur alltweets pour refresh les hashtags
+  }, [allTweets.length]);
+  
+  const allHashtags = useSelector((state) => state.hashtags.value)
+  console.log('all hashtags from reducer ==> ', allHashtags)
+  // composants hashtags sur allhashtags
+  const hashatgs = allHashtags?.map((data, i) => {
+      return <Hashtag key={i} {...data} />
+  })
   
 
    return (
@@ -52,24 +147,31 @@ function Home() {
           </div>
         </div>
         <div className={styles.button}>
-          <button className={styles.logoutButton} onClick={() => handleLogout()}>Logout</button>
+          <button onClick={() => handleLogout()} className={styles.logoutButton}>Logout</button>
         </div>
       </div>
     </div>
     <div className={styles.tweetContainer}>
       <h2 className={styles.titles}>Home</h2>
+      <div className={styles.newTweet}>
       <div className={styles.postTweet}>
-        {/* Création tweets BUTTON = TWeet / 280 caractère max / ecriture What's up  */}
-        <TextArea maxLength={280}/>
+        <TextArea className={styles.text} placeholder="What's up ?" maxLength={280} onChange={(e) => setTextTweet(e.target.value)} value={textTweet}/>
       </div>
       <div className={styles.divButton}>
-        <button className={styles.tweetButton}>Tweet</button>
+        <span className={styles.counter}>{counter}</span>
+        <button className={styles.tweetButton} onClick={() => handleTweet()}>Tweet</button>
       </div>
-      {/* <Tweet /> */}
+      </div>
+      <div className={styles.tweetsContainer}>
+        {/* !!!!! gerer le respo,sive des tweet quand ils sont long */}
+        {tweets}
+      </div>
     </div>
     <div className={styles.trendContainer}>
     <h2 className={styles.titles}>Trends</h2>
-      {/*trend*/}
+      <div className={styles.hashatgsContainer}>
+        {hashatgs}
+      </div>
     </div>
   </div>
    )

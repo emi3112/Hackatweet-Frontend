@@ -12,9 +12,14 @@ function SignInModal() {
     const dispatch = useDispatch()
     const user = useSelector((state) => state.user.value);
 
+    useEffect(() => {
+        setIsValidate(true)
+    }, []);    
+
 
     const [signInUsername, setSignInUsername] = useState('');
 	const [signInPassword, setSignInPassword] = useState('');
+    const [isValidate, setIsValidate] = useState(true)
 
     const router = useRouter()
 
@@ -32,7 +37,9 @@ function SignInModal() {
 					setSignInUsername('');
 					setSignInPassword('');
                     router.push('/home')				
-				}
+				} else {
+                    setIsValidate(false)
+                }
 			});
     }
 
@@ -47,8 +54,9 @@ function SignInModal() {
             </div>
                 <div className={styles.registerSection}>
                     {/* onChange={(e) => setSignUpUsername(e.target.value)} value={signUpUsername}  */}
-					<input className={styles.signInInput}type="text" placeholder="Username" id="signUpUsername" onChange={(e) => setSignInUsername(e.target.value)} value={signInUsername}/>
-                    <input className={styles.signInInput}type="password" placeholder="Password" id="signUpPassword" onChange={(e) => setSignInPassword(e.target.value)} value={signInPassword}/>
+					<input className={styles.signInInput} required type="text" placeholder="Username" id="signUpUsername" onChange={(e) => setSignInUsername(e.target.value)} value={signInUsername}/>
+                    <input className={styles.signInInput} required type="password" placeholder="Password" id="signUpPassword" onChange={(e) => setSignInPassword(e.target.value)} value={signInPassword}/>
+                    {!isValidate && <p className={styles.wrongUser}>User already exist or missing informations</p>}
 					<button className={styles.signInButton} id="register" onClick={() => handleSignIn()}>Sign Up</button>
 				</div>
         </div>

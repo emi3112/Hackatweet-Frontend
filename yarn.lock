@@ -383,6 +383,13 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "6.4.0"
 
+"@fortawesome/free-regular-svg-icons@^6.4.0":
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-6.4.0.tgz#cacc53bd8d832d46feead412d9ea9ce80a55e13a"
+  integrity sha512-ZfycI7D0KWPZtf7wtMFnQxs8qjBXArRzczABuMQqecA/nXohquJ5J/RCR77PmY5qGWkxAZDxpnUFVXKwtY/jPw==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.4.0"
+
 "@fortawesome/free-solid-svg-icons@^6.4.0":
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-6.4.0.tgz#48c0e790847fa56299e2f26b82b39663b8ad7119"
@@ -2938,6 +2945,11 @@ minimist@^1.2.6:
   dependencies:
     minimist "^1.2.6"
 
+moment@^2.29.4:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -3661,6 +3673,11 @@ react-redux@^8.0.5:
     react-is "^18.0.0"
     use-sync-external-store "^1.0.0"
 
+react-relative-time@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/react-relative-time/-/react-relative-time-0.0.7.tgz#9f7f4074286ebe6135b533eee1adea055df97183"
+  integrity sha512-1MufiuswxbmgPR0fdfKLkQpjlphkMTjC99IOOuCENRiF+7EmtlcNFi+kCNtmeCDk3gtizG3OiuYBevN0vljNYQ==
+
 react-router-dom@^6.10.0:
   version "6.10.0"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.10.0.tgz#090ddc5c84dc41b583ce08468c4007c84245f61f"
@@ -4253,6 +4270,11 @@ webidl-conversions@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-7.0.0.tgz#256b4e1882be7debbf01d05f0aa2039778ea080a"
   integrity sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==
+
+webkit@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/webkit/-/webkit-0.0.0.tgz#3ab2afb17115c2a394a16c3f367f34cee19fcefb"
+  integrity sha512-YVSDLyRsq0oQkIDHMTV6HbZOjq691WIQGQZPOsyptx85DDJN4cnqYWWSaQQjLwniVMdAfgfFrcgezdJdHmvcDQ==
 
 whatwg-encoding@^2.0.0:
   version "2.0.0"

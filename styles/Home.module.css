@@ -9,7 +9,7 @@
 
 
 .tweetContainer {
-  background-color: #1C2833;
+  background-color: #17202A;
   display: flex;
   grid-row-start: 1;
   grid-row-end: 16;
@@ -18,7 +18,7 @@
 }
 
 .trendContainer {
-  background-color: #1C2833;
+  background-color: #17202A;
   display: flex;
   grid-row-start: 1;
   grid-row-end: 16;
@@ -29,7 +29,7 @@
 
 /* LOGO BAR */
 .logoBarContainer {
-  background-color: #1C2833;
+  background-color: #17202A;
   display: flex;
   grid-row-start: 1;
   grid-row-end: 16;
@@ -97,7 +97,7 @@ font-family: Roboto, sans-serif;
 font-weight: 0;
 font-size: 10px;
 color: #fff;
-background-color: #1C2833;
+background-color: #17202A;
 padding: 10px 30px;
 border: solid #ffffff 2px;
 box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
@@ -116,8 +116,8 @@ transition : 1000ms;
 padding: 10px 40px;
 transform : translateY(-0px);
 background-color: #fff;
-color: #1C2833;
-border: solid 2px #1C2833;
+color: #17202A;
+border: solid 2px #17202A;
 }
 
 .button {
@@ -145,7 +145,7 @@ border: solid 2px #1C2833;
 .postTweet {
   display: flex;
   flex-direction: column;
-  padding: 10px 30px;
+  padding: 5px 30px;
   height: 100px;
 }
 
@@ -176,8 +176,70 @@ background-color: #fff;
 color: #0066cc;
 border: solid 2px #0066cc;
 }
+
+
 .divButton {
   display: flex;
   justify-content: flex-end;
   margin-right: 25px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.counter {
+  color: #fff;
+  margin-right: 20px;
+}
+
+.text {
+  background-color: #17202A;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  font-size: 18px;
+  border-bottom: #566573 solid 2px ;
+  border-top: #17202A;
+  border-left: #17202A;
+  border-right: #17202A;
+}
+
+.newTweet {
+  border-bottom: #566573 solid 1px;
+  padding-bottom: 25px;
+}
+
+.tweetsContainer {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+/* width */
+.tweetsContainer::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.tweetsContainer::-webkit-scrollbar-track {
+  background: #17202A;
+}
+
+/* Handle */
+.tweetsContainer::-webkit-scrollbar-thumb {
+  background: #566573;
+}
+
+/* Handle on hover */
+.tweetsContainer::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+.trendContainer {
+  display: flex;
+  flex-direction: column;
+
+}
+.hashatgsContainer {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
 }
