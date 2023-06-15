@@ -29,12 +29,12 @@ const store = configureStore({
  
      <Provider store={store}>
       <PersistGate persistor={persistor}>
-      <Head>
-        <title>Hackatweet</title>
-      </Head>
-      <Component {...pageProps} />
+        <Head>
+          <title>Hackatweet</title>
+        </Head>
+        <Component {...pageProps} />
       </PersistGate>
-      </Provider>
+    </Provider>
   
   );
 }

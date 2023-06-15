@@ -1,10 +1,12 @@
 import Image from 'next/image';
-import styles from '../styles/SignUp.module.css'
+import styles from '../../styles/SignUp.module.css'
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {login, logout} from '../reducers/user'
+import {login, logout} from '../../reducers/user'
 import Link from 'next/link';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 
 

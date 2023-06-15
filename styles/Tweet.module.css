@@ -1,9 +1,12 @@
 .tweet {
 	display: flex;
 	height: 180px;
-	background-color: #17202A ;
+	background-color: #273746 ;
 	flex-direction: column;
-	border-bottom: 1px solid #566573;
+	border-bottom: 1px solid #273746;
+	width: 85%;
+	margin-bottom: 10px;
+	border-radius: 16px;
 }
 
 .logoInfos {

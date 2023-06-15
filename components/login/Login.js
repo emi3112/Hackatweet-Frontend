@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
-import styles from '../styles/Login.module.css'
-import {  Modal } from 'antd';
-import SignUp from '../components/SignUp'
-import SignIn from '../components/SignIn'
+import styles from '../../styles/Login.module.css'
+import { Modal } from 'antd';
+import SignUp from './SignUp'
+import SignIn from './SignIn'
 import Link from 'next/link';
 
 
@@ -17,12 +17,10 @@ function Login() {
 
     const handleModalSignUp = () => {
         setModalSignUp(true)
-        console.log('Sign Up')
     }
 
     const handleModalSignIn = () => {
         setModalSignIn(true)
-        console.log('Sign Up')
     }
 
 

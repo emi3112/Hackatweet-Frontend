@@ -6,12 +6,6 @@
     height: 100%;
 }
 
-.registerSection {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
 .logoP {
     display: flex;
     flex-direction: column;
@@ -35,9 +29,10 @@
 .registerSection {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     margin: 10px 0 20px 0;
+    height: 200px;
 }
 
 
@@ -48,12 +43,14 @@
 }
 
 .signInInput {
-    margin: 5px 0 5px 0;
+    margin: 15px 0 15px 0;
     height: 35px;
     width: 45%;
-    border-radius: 5px;
+    border-radius: 1%;
     background-color: #1C2833;
     animation: shake 0.14s 3;
+    margin-top: 20px;
+    
 }
 
 .signInInput:valid {

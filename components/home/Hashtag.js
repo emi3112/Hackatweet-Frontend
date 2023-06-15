@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/Hashtags.module.css";
+import styles from "../../styles/Hashtags.module.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 

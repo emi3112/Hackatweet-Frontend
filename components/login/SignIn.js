@@ -1,10 +1,14 @@
 import Image from 'next/image';
-import styles from '../styles/SignIn.module.css'
+import styles from '../../styles/SignIn.module.css'
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {login, logout} from '../reducers/user'
+import {login, logout} from '../../reducers/user'
 import Link from 'next/link';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import { alpha, styled } from '@mui/material/styles';
+import { useRef } from 'react';
 
 
 function SignInModal() {
@@ -16,6 +20,9 @@ function SignInModal() {
         setIsValidate(true)
     }, []);    
 
+
+    // const signInUsername = useRef(null)
+    // const signInPassword = useRef(null)
 
     const [signInUsername, setSignInUsername] = useState('');
 	const [signInPassword, setSignInPassword] = useState('');
@@ -43,6 +50,28 @@ function SignInModal() {
 			});
     }
 
+    // input from MIU
+    const CssTextField = styled(TextField)({
+        '& label.Mui-focused': {
+          color: '#A0AAB4',
+        },
+        '& .MuiInput-underline:after': {
+          borderBottomColor: '#B2BAC2',
+        },
+        '& .MuiOutlinedInput-root': {
+            color: 'white',
+          '& fieldset': {
+            borderColor: '#E0E3E7',
+          },
+          '&:hover fieldset': {
+            borderColor: '#B2BAC2',
+          },
+          '&.Mui-focused fieldset': {
+            borderColor: '#6F7E8C',
+          },
+        },
+      });
+
 
     return (
         <div className={styles.modalSignIn}>
@@ -53,8 +82,9 @@ function SignInModal() {
                 <p className={styles.p}>Connect to Hackatweet</p>
             </div>
                 <div className={styles.registerSection}>
-                    {/* onChange={(e) => setSignUpUsername(e.target.value)} value={signUpUsername}  */}
-					<input className={styles.signInInput} required type="text" placeholder="Username" id="signUpUsername" onChange={(e) => setSignInUsername(e.target.value)} value={signInUsername}/>
+                    {/* <CssTextField label="Username"  type='text' onChange={(e) => setSignInUsername(e.target.value)} value={signInUsername}/>
+                    <CssTextField label="Password" type="password" onChange={(e) => setSignInPassword(e.target.value)} value={signInPassword}/> */}
+					          <input className={styles.signInInput} required type="text" placeholder="Username" id="signUpUsername" onChange={(e) => setSignInUsername(e.target.value)} value={signInUsername}/> 
                     <input className={styles.signInInput} required type="password" placeholder="Password" id="signUpPassword" onChange={(e) => setSignInPassword(e.target.value)} value={signInPassword}/>
                     {!isValidate && <p className={styles.wrongUser}>User already exist or missing informations</p>}
 					<button className={styles.signInButton} id="register" onClick={() => handleSignIn()}>Sign Up</button>
