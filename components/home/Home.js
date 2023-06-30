@@ -1,18 +1,24 @@
 import React from "react";
+import Image from 'next/image';
+import { useDispatch, useSelector } from 'react-redux';
+const { TextArea } = Input;
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+// COMPOSANTS
 import styles from '../../styles/Home.module.css'
 import LastTweets from './LastTweets'
 import Tweet from "./Tweet";
-import Image from 'next/image';
-import { logout } from "../../reducers/user";
-import { useDispatch, useSelector } from 'react-redux';
-import { Input } from 'antd';
-const { TextArea } = Input;
-import { useEffect, useState } from 'react';
-import { addTweet, importTweet, deleteTweet } from "../../reducers/tweets";
 import Hashtag from "./Hashtag";
+// REDUCER
+import { logout } from "../../reducers/user";
+import { addTweet, importTweet, deleteTweet } from "../../reducers/tweets";
 import { importHashtags, deleteHastags } from "../../reducers/hashtags";
+import { addImgBack, addImgFront } from "../../reducers/user";
+// FONTAWESOME
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+// ANT
+import { Input } from 'antd';
 import {
   UserOutlined,
   MessageOutlined,
@@ -20,7 +26,6 @@ import {
   PlusCircleOutlined,
 } from '@ant-design/icons';
 import { Button, Menu } from 'antd';
-import { useRouter } from 'next/router';
 
 
 function Home() {
@@ -31,17 +36,40 @@ function Home() {
 // HANDLE USER DATA
   const user = useSelector((state) => state.user.value)
 
-  console.log('user connected ==>',user)
+  // console.log('user connected ==>',user)
   let username = null
   let firstname = null
   let usernameDb = null
   
   if(user.token && user.username) {
-    firstname = user.token.firstname
+    firstname = user.firstname
     username = `@${user.username}` 
     usernameDb = user.username
   }
-  
+
+  // HANDLE PROFILE PHOTO
+
+  const fetchPhotos = () => {
+      fetch(`http://localhost:3000/users/getImage/${usernameDb}`).then(response => response.json())
+      .then(data => {
+          if(data.result) {
+              console.log('data image !!! ==>', data)
+              // BACK
+              dispatch(addImgBack(data.photoBack))
+              // setImageBack(data.photoBack)
+              // FRONT
+              dispatch(addImgFront(data.photoFront))
+          }
+      })
+  }
+
+  // quand init composant
+  useEffect(() => {
+      fetchPhotos()
+  }, []);
+
+  const photoFront = useSelector((state) => state.user.value.imgFront)
+  console.log(photoFront)
   // LOGOUT
   const handleLogout = () => {
     dispatch(deleteTweet())
@@ -70,7 +98,7 @@ function Home() {
   
   // handle change page onClick
   const handleChangePage = (e) => {
-    console.log('click !!', e.key)
+    // console.log('click !!', e.key)
     if(e.key === '1') {
       router.push('/home')
     } else if(e.key === '2') {
@@ -86,7 +114,7 @@ function Home() {
     .then(data => {
       if (data.result) {
         const hashtags = data.hashtags
-        console.log('hashtags data from fetch ==>',hashtags)
+        // console.log('hashtags data from fetch ==>',hashtags)
         dispatch(importHashtags(hashtags))
       }
     });
@@ -96,7 +124,7 @@ function Home() {
     fetch(`http://localhost:3000/tweets/allTweets/${usernameDb}`).then(response => response.json())
     .then(data => {
       if (data.result) {
-        console.log('data fetch all tweets',data)
+        // console.log('data fetch all tweets',data)
         const allTweets = data.allTweets
         dispatch(importTweet(allTweets))
       }
@@ -168,10 +196,10 @@ function Home() {
   })
   
   const allTweets = useSelector((state) => state.tweets.value)
-  console.log('alltweets after reducer ==>',allTweets)
+  // console.log('alltweets after reducer ==>',allTweets)
   // si my tweets with trash other no trash 
   const tweets = allTweets?.map((data, i) => {
-    console.log('data from alltweets ==>',data)
+    // console.log('data from alltweets ==>',data)
     //  check si le tweet nous appartient
     if(data.username === usernameDb) {
       // si le username apparait en clé étrangère dans le tweet on met isLiked a true sinon false
@@ -253,7 +281,7 @@ function Home() {
       <div className={styles.infosContainer}>
         <div className={styles.logoInfos}>
           <div className={styles.userLogo}>
-            <Image src="/user.png" alt="LogoUser" width={70} height={70} />
+          <Image src={photoFront ? photoFront : '/user.png'} alt="LogoUser" width={70} height={70} style={{borderRadius: 50}}/>
           </div>
           <div className={styles.userInfos}>
             <span className={styles.p}>{firstname}</span>

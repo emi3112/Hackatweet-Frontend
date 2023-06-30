@@ -29,7 +29,7 @@ function Messages() {
     let usernameDb = null
     
     if(user.token && user.username) {
-      firstname = user.token.firstname
+      firstname = user.firstname
       username = `@${user.username}` 
       usernameDb = user.username
     }

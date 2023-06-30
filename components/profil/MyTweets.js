@@ -5,23 +5,20 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { removeLikeStore } from '../../reducers/tweets'
 import moment from "moment";
-import { importHashtags } from "../../reducers/hashtags";
-import { importTweet } from "../../reducers/tweets";
+import { importMyTweets } from "../../reducers/user";
 
 
-function LastTweets(props) {
+export function MyTweet(props) {
 
-  const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
   // HANDLE USER DATA
   const user = useSelector((state) => state.user.value)
-  console.log('user from my tweets ==> ', user.firstname)
 
-  let username = `@${user.username}`
-  let firstname = user.firstname
-  let usernameDb = user.username
+  let username = null
+  let firstname = null
+  let usernameDb = null
   
   if(user.token && user.username) {
     firstname = user.firstname
@@ -56,8 +53,8 @@ function LastTweets(props) {
     fetch(`http://localhost:3000/tweets/allTweets/${usernameDb}`).then(response => response.json())
     .then(data => {
       if (data.result) {
-        const allTweets = data.allTweets
-        dispatch(importTweet(allTweets))
+        const myTweets = data.myTweets
+        dispatch(importMyTweets(myTweets))
       }
     });
   }
@@ -70,7 +67,7 @@ function LastTweets(props) {
     // if true delete dans la db hashtags 
     if(handleHashtag(text)) {
       const hashtag = handleHashtag(text)
-      fetch(`http://localhost:3000/tweets/delete/${usernameDb}`, { 
+      fetch(`http://localhost:3000/tweets/delete`, { 
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({text})
@@ -80,7 +77,7 @@ function LastTweets(props) {
           // suprrime le tweet du reducer
           dispatch(removeLikeStore(tweet))
           // fetch pour suprrimer le hashtag de la db
-          fetch(`http://localhost:3000/hashtags/delete/${usernameDb}`,{
+          fetch(`http://localhost:3000/hashtags/delete`,{
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({name: hashtag})
@@ -167,8 +164,8 @@ function LastTweets(props) {
             <Image src="/user.png" alt="LogoUser" width={70} height={70} />
           </div>
           <div className={styles.userInfos}>
-            <span className={styles.p}>{firstname}</span>
-            <span className={styles.p1}>{username}</span>
+            <span className={styles.p}>{props.firstname}</span>
+            <span className={styles.p1}>{props.username}</span>
             <span className={styles.p2}>{date}</span>
           </div>
         </div>
@@ -183,5 +180,6 @@ function LastTweets(props) {
     </div>
   );
 }
-  export default LastTweets;
   
+
+export default MyTweet;

@@ -176,12 +176,24 @@
 /* PHOTO CONTAINER */
 .profilPhotoContainer {
     display: flex;
-    height: 250px;
+    height: 200px;
     flex-direction: column;
     justify-content: space-between;
     padding: 5px;
 }
 
+.profilPhotoPage {
+    position: absolute;
+    background-color: #17202A;
+    margin: 100px 0 0 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* MODAL */
 .profilPhoto{
     position: absolute;
     background-color: #17202A;
@@ -190,6 +202,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.imageProfileBack:hover {
+    transition: .5s ease;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.profilPhoto:hover {
+    transition: .5s ease;
+    opacity: 0.6;
+    cursor: pointer;
 }
 
 /* MODAL BUTTON */
@@ -215,6 +239,7 @@
     flex-direction: row;
     align-items: center;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 .editedButton:hover{
@@ -228,12 +253,13 @@
 
 /* USER INFOS */
 .userInfoContainer {
-    height: 110px;
+    /* height: 110px; */
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     padding-left: 20px;
     border-bottom: 1px #566573 solid;
+    padding-bottom: 10px;
 }
 
 .useInfoIcons {
@@ -258,6 +284,13 @@
     margin-bottom: 10px;
 }
 
+.h4 {
+    font-family: Verdana;
+    color: #fff;
+    font-size: 13px;  
+    margin: 5px 0 5px 0;
+}
+
 .span {
     margin-right: 15px;
     font-family: Verdana;
@@ -274,10 +307,9 @@
 
 /* modal user infos */
 .modalContainer {
-    overflow: auto;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 100vh;
 }
 
 .nomInput {
@@ -297,11 +329,46 @@
     color: #fff;
 }
 
-/* EDITER LE PROFIL */
-.updatePhotoBack {
-    position: absolute;
-    z-index: 0;
+.inputModalInfo {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.inputinfo {
+    margin: 10px 0 10px 0;
+    height: 40px;
+}
+
+/* TWEETS CONTAINER */
+  .tweetsContainer {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    align-items: center;
+    padding-top: 10px;
+  }
+  
+  /* SCROOLLLLL */
+  /* width */
+.tweetsContainer::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.tweetsContainer::-webkit-scrollbar-track {
+  background: #17202A;
+}
+
+/* Handle */
+.tweetsContainer::-webkit-scrollbar-thumb {
+  background: #566573;
+}
+
+/* Handle on hover */
+.tweetsContainer::-webkit-scrollbar-thumb:hover {
+  background: #888;
 }
 /* ----------------------------------------------------- LIKE CONTAINER ------------------------------------------------------------------ */
 .likedContainer {
@@ -312,4 +379,5 @@
     grid-column-start: 11;
     grid-column-end: 16;
     border-left: 1px solid #566573;
+    flex-direction: column;
 }

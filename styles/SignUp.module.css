@@ -40,19 +40,12 @@
     margin: 10px 0 20px 0;
 }
 
-@keyframes shake {
-    0%, 100% {translate: 0;}
-    25% {translate: 8px 0;}
-    75% {translate: -8px 0;}
-}
-
 .signUpInput {
-    margin: 5px 0 5px 0;
-    height: 35px;
-    width: 45%;
+    margin: 10px 0 10px 0;
+    height: 40px;
+    width: 60%;
     border-radius: 5px;
-    background-color: #1C2833;
-    animation: shake 0.14s 3;
+    background-color: #fff;
 }
 
 .signUpButton {

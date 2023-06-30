@@ -5,9 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {login, logout} from '../../reducers/user'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-
+import { Input } from 'antd';
 
 
 function SignUpModal() {
@@ -34,7 +32,7 @@ function SignUpModal() {
         .then(data => {
             if (data.result) {
                 console.log(data)
-                dispatch(login({ username: signUpUsername, token: data.token }));
+                dispatch(login({ username: signUpUsername, token: data.user.token, firstname: data.user.firstname }));
                 setSignUpFirstname('')
                 setSignUpUsername('');
                 setSignUpPassword('');
@@ -59,9 +57,9 @@ function SignUpModal() {
                 <p className={styles.p}>Create your Hackatweet account</p>
             </div>
                 <div className={styles.registerSection}>
-					<input className={styles.signUpInput} type="text" placeholder="Firstame" id="signUpFirstame" onChange={(e) => setSignUpFirstname(e.target.value)} value={signUpFirstname}/>
-					<input className={styles.signUpInput} type="text" placeholder="Username" id="signUpUsername" onChange={(e) => setSignUpUsername(e.target.value)} value={signUpUsername}/>
-                    <input className={styles.signUpInput} type="password" placeholder="Password" id="signUpPassword" onChange={(e) => setSignUpPassword(e.target.value)} value={signUpPassword}/>
+					<Input className={styles.signUpInput} type="text" placeholder="Firstame" id="signUpFirstame" onChange={(e) => setSignUpFirstname(e.target.value)} value={signUpFirstname}/>
+					<Input className={styles.signUpInput} type="text" placeholder="Username" id="signUpUsername" onChange={(e) => setSignUpUsername(e.target.value)} value={signUpUsername}/>
+                    <Input.Password className={styles.signUpInput} type="password" placeholder="Password" id="signUpPassword" onChange={(e) => setSignUpPassword(e.target.value)} value={signUpPassword}/>
                     {!isValidate && <p className={styles.wrongUser}>User already exist or missing informations</p>}
 					<button className={styles.signUpButton}  href="/home" onClick={() => handleSignUp()}>Sign Up</button>
 				</div>

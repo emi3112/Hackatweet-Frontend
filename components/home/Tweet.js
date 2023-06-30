@@ -20,7 +20,7 @@ export function Tweet(props) {
   let usernameDb = null
   
   if(user.token && user.username) {
-    firstname = user.token.firstname
+    firstname = user.firstname
     username = `@${user.username}` 
     usernameDb = user.username
   }

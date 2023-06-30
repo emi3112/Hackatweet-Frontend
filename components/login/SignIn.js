@@ -6,9 +6,9 @@ import {login, logout} from '../../reducers/user'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 import { alpha, styled } from '@mui/material/styles';
-import { useRef } from 'react';
+import { useRef, createRef } from 'react';
+import { Input } from 'antd';
 
 
 function SignInModal() {
@@ -19,10 +19,6 @@ function SignInModal() {
     useEffect(() => {
         setIsValidate(true)
     }, []);    
-
-
-    // const signInUsername = useRef(null)
-    // const signInPassword = useRef(null)
 
     const [signInUsername, setSignInUsername] = useState('');
 	const [signInPassword, setSignInPassword] = useState('');
@@ -39,8 +35,8 @@ function SignInModal() {
 		}).then(response => response.json())
 			.then(data => {
 				if (data.result) {
-                    console.log(data)
-					dispatch(login({ username: signInUsername, token: data.token }));
+                    console.log('user from fetch', data.user.firstname)
+					dispatch(login({ username: signInUsername, token: data.user.token, firstname: data.user.firstname }));
 					setSignInUsername('');
 					setSignInPassword('');
                     router.push('/home')				
@@ -49,28 +45,7 @@ function SignInModal() {
                 }
 			});
     }
-
-    // input from MIU
-    const CssTextField = styled(TextField)({
-        '& label.Mui-focused': {
-          color: '#A0AAB4',
-        },
-        '& .MuiInput-underline:after': {
-          borderBottomColor: '#B2BAC2',
-        },
-        '& .MuiOutlinedInput-root': {
-            color: 'white',
-          '& fieldset': {
-            borderColor: '#E0E3E7',
-          },
-          '&:hover fieldset': {
-            borderColor: '#B2BAC2',
-          },
-          '&.Mui-focused fieldset': {
-            borderColor: '#6F7E8C',
-          },
-        },
-      });
+      
 
 
     return (
@@ -82,10 +57,8 @@ function SignInModal() {
                 <p className={styles.p}>Connect to Hackatweet</p>
             </div>
                 <div className={styles.registerSection}>
-                    {/* <CssTextField label="Username"  type='text' onChange={(e) => setSignInUsername(e.target.value)} value={signInUsername}/>
-                    <CssTextField label="Password" type="password" onChange={(e) => setSignInPassword(e.target.value)} value={signInPassword}/> */}
-					          <input className={styles.signInInput} required type="text" placeholder="Username" id="signUpUsername" onChange={(e) => setSignInUsername(e.target.value)} value={signInUsername}/> 
-                    <input className={styles.signInInput} required type="password" placeholder="Password" id="signUpPassword" onChange={(e) => setSignInPassword(e.target.value)} value={signInPassword}/>
+                    <Input className={styles.signInInput} placeholder="Username" type='text' onChange={(e) => (setSignInUsername(e.target.value))} value={signInUsername}/>
+                    <Input.Password className={styles.signInInput} placeholder="Password" type="password"  onChange={(e) => (setSignInPassword(e.target.value))} value={signInPassword}/>
                     {!isValidate && <p className={styles.wrongUser}>User already exist or missing informations</p>}
 					<button className={styles.signInButton} id="register" onClick={() => handleSignIn()}>Sign Up</button>
 				</div>

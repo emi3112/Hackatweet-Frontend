@@ -36,25 +36,18 @@
 }
 
 
-@keyframes shake {
+/* @keyframes shake {
     0%, 100% {translate: 0;}
     25% {translate: 8px 0;}
     75% {translate: -8px 0;}
-}
+} */
 
 .signInInput {
+    width: 60%;
+    background-color: #fff;
+    height: 40px;
     margin: 15px 0 15px 0;
-    height: 35px;
-    width: 45%;
-    border-radius: 1%;
-    background-color: #1C2833;
-    animation: shake 0.14s 3;
-    margin-top: 20px;
     
-}
-
-.signInInput:valid {
-    animation: none;
 }
 
 .signInButton {
