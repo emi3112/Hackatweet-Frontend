@@ -16,7 +16,7 @@ import { importHashtags, deleteHastags } from "../../reducers/hashtags";
 import { addImgBack, addImgFront } from "../../reducers/user";
 // FONTAWESOME
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faMinus, faGif } from '@fortawesome/free-solid-svg-icons';
 // ANT
 import { Input } from 'antd';
 import {
@@ -35,8 +35,8 @@ function Home() {
 // ---------------------------------------------------------------- MENU CONTAINER ------------------------------------------------------------
 // HANDLE USER DATA
   const user = useSelector((state) => state.user.value)
+  console.log('user from reducer ==>',user)
 
-  // console.log('user connected ==>',user)
   let username = null
   let firstname = null
   let usernameDb = null
@@ -48,12 +48,12 @@ function Home() {
   }
 
   // HANDLE PROFILE PHOTO
-
   const fetchPhotos = () => {
       fetch(`http://localhost:3000/users/getImage/${usernameDb}`).then(response => response.json())
       .then(data => {
+        // console.log('data fetch images ==>', data)
           if(data.result) {
-              console.log('data image !!! ==>', data)
+              // console.log('data image !!! ==>', data)
               // BACK
               dispatch(addImgBack(data.photoBack))
               // setImageBack(data.photoBack)
@@ -69,7 +69,7 @@ function Home() {
   }, []);
 
   const photoFront = useSelector((state) => state.user.value.imgFront)
-  console.log(photoFront)
+  // console.log('photo front from reducer ==>',photoFront)
   // LOGOUT
   const handleLogout = () => {
     dispatch(deleteTweet())
@@ -151,32 +151,34 @@ function Home() {
 
   // post new tweet in db 
   const handleTweet = () => {
-    fetch('http://localhost:3000/tweets/newTweet', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstname: firstname, username: usernameDb, date: null, text: textTweet, likes: 0 }),
-    }).then(response => response.json())
-    .then(data => {
-      if (data.result) {
-        // traitement regex hashtag quand post tweet
-        if(handleHashtag(data.tweet.text)) {
-          // # isolé qui est post
-          const name = handleHashtag(data.tweet.text)
-          fetch('http://localhost:3000/hashtags/newHashtag', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name }),
-          }).then(response => response.json())
-          .then(data => {
-            fetchHashtags()
-          })
+    if(textTweet.length > 0) {
+      fetch('http://localhost:3000/tweets/newTweet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstname: firstname, username: usernameDb, date: null, text: textTweet, likes: 0 }),
+      }).then(response => response.json())
+      .then(data => {
+        if (data.result) {
+          // traitement regex hashtag quand post tweet
+          if(handleHashtag(data.tweet.text)) {
+            // # isolé qui est post
+            const name = handleHashtag(data.tweet.text)
+            fetch('http://localhost:3000/hashtags/newHashtag', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name }),
+            }).then(response => response.json())
+            .then(data => {
+              fetchHashtags()
+            })
+          }
         }
-      }
-      // ajoute le tweet dans le reducer (a clean par la suite)
-      dispatch(addTweet(data.tweet))
-    })
-    // met le text de l'input a vide après le post
-    setTextTweet('')
+        // ajoute le tweet dans le reducer (a clean par la suite)
+        dispatch(addTweet(data.tweet))
+      })
+      // met le text de l'input a vide après le post
+      setTextTweet('')
+    }
   };
   
   // qaund init composant
@@ -199,9 +201,9 @@ function Home() {
   // console.log('alltweets after reducer ==>',allTweets)
   // si my tweets with trash other no trash 
   const tweets = allTweets?.map((data, i) => {
-    // console.log('data from alltweets ==>',data)
     //  check si le tweet nous appartient
     if(data.username === usernameDb) {
+      console.log('data for render my tweets ==> ',data)
       // si le username apparait en clé étrangère dans le tweet on met isLiked a true sinon false
       if(data.whoLiked.length) {
         const isLiked = data.whoLiked.some((e) => e.username === usernameDb)
@@ -247,8 +249,11 @@ function Home() {
         <TextArea className={styles.text} placeholder="What's up ?" maxLength={280} onChange={(e) => setTextTweet(e.target.value)} value={textTweet}/>
       </div>
       <div className={styles.divButton}>
-        <span className={styles.counter}>{counter}</span>
-        <button className={styles.tweetButton} onClick={() => handleTweet()}>Tweet</button>
+        <button className={styles.gif}>GIF</button>
+        <div className={styles.buttonCounterContainer}>
+          <span className={styles.counter}>{counter}</span>
+          <button className={styles.tweetButton} onClick={() => handleTweet()}>Tweet</button>
+        </div>
       </div>
     </div>)
 

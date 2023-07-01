@@ -51,8 +51,8 @@ function Profil() {
     let username = null
     let firstname = null
     let usernameDb = null
-    let bio = user.bio ? user.bio : 'Bio'
-    let birth = user.birth ? user.birth : 'Date of Birth'
+    let bio = user.bio ? user.bio : 'Write your bio here...'
+    let birth = user.birth ? moment(user.birth).format('LL') : 'Date of Birth'
     let location = user.location ? user.location : 'Where are you born ?'
     
     if(user.token && user.username) {
@@ -89,7 +89,7 @@ function Profil() {
 
     // handle change page onClick
     const handleChangePage = (e) => {
-        console.log('click !!', e.key)
+        // console.log('click !!', e.key)
         if(e.key === '1') {
             router.push('/home')
         } else if(e.key === '2') {
@@ -113,13 +113,11 @@ function Profil() {
         fetch(`http://localhost:3000/users/getImage/${usernameDb}`).then(response => response.json())
         .then(data => {
             if(data.result) {
-                console.log(data)
+                // console.log(data)
                 // BACK
                 dispatch(addImgBack(data.photoBack))
-                // setImageBack(data.photoBack)
                 // FRONT
                 dispatch(addImgFront(data.photoFront))
-                // setImageFront(data.photoFront)
             }
         })
     }
@@ -183,7 +181,7 @@ function Profil() {
     const [ newBirth, setNewBirth ] = useState('')
     const [ newLocation, setNewLocation ] = useState('')
     const { TextArea } = Input;
-    console.log('info modal user ==>', newFirstname, newBio, newBirth, newLocation)
+    // console.log('info modal user ==>', newFirstname, newBio, newBirth, newLocation)
 
 
     // SAVE INFO MODAL AND CLOSE
@@ -225,7 +223,7 @@ function Profil() {
                 body: JSON.stringify({ newFirstname, newBio, newBirth, newLocation }),
             }).then((response) => response.json())
             .then(data => {
-                console.log('data after post user info ==>', data)
+                // console.log('data after post user info ==>', data)
                 dispatch(addPersonalInfos({bio: data.userUdapte.bio, location: data.userUdapte.location,
                 firstname: data.userUdapte.firstname, birth: data.userUdapte.birth}))
                 setNewBio('')
@@ -240,7 +238,7 @@ function Profil() {
     // -----------------------------------------------------MY TWEETS---------------------------------------------------------------------
     const allTweets = useSelector((state) => state.tweets.value)
 
-    const myTweets = allTweets?.map((data, i) => {
+    let myTweets = allTweets?.map((data, i) => {
         // console.log('data from alltweets ==>',data)
         //  check si le tweet nous appartient
         if(data.username === usernameDb) {
@@ -260,6 +258,15 @@ function Profil() {
           }
         }
     })
+
+    const allMyTweets = myTweets.filter( e => {
+        return e !== undefined
+    })
+    // Si pas de tweets
+    const noTweets =
+    <div className={styles.noTweets}>
+        <p>Write some tweets now !</p>
+    </div>
 
 // -----------------------------------------------------MY LIKES---------------------------------------------------------------------
 
@@ -285,6 +292,14 @@ function Profil() {
           }
     })
 
+    const allMyLikes = myLikes.filter( e => {
+        return e !== undefined
+    })
+
+    const noLikes =
+    <div className={styles.noTweets}>
+        <p>Like some tweets now !</p>
+    </div>
 
     return(
         <div className={styles.pageContainer}>
@@ -314,7 +329,7 @@ function Profil() {
                     <div className={styles.infosContainer}>
                         <div className={styles.logoInfos}>
                         <div className={styles.userLogo}>
-                            <Image src={photoFront} alt="LogoUser" width={70} height={70} style={{borderRadius: 50}}/>
+                            <Image src={photoFront ? photoFront : '/user.png'} alt="LogoUser" width={70} height={70} style={{borderRadius: 50}}/>
                         </div>
                         <div className={styles.userInfos}>
                             <span className={styles.p}>{firstname}</span>
@@ -395,16 +410,16 @@ function Profil() {
                     <h3 className={styles.username}>{username}</h3>
                     {/* dinamiser les informations dessous */}
                     <div>
-                        <h4 className={styles.h4}>{bio}</h4>
+                        <p className={styles.h4}>{bio}</p>
                         <FontAwesomeIcon icon={faLocationDot} className={styles.useInfoIcons} />
                         <span className={styles.span}>{location}</span>
                         <FontAwesomeIcon  icon={faCakeCandles} className={styles.useInfoIcons} />
-                        <span className={styles.span}> né le {moment(birth).format('LL')}</span>
+                        <span className={styles.span}> né le {birth}</span>
                     </div>
             </div>
             {/* MY TWEETS => fetch get my tweets avec populates */}
             <div className={styles.tweetsContainer}>
-                {myTweets}
+                {allMyTweets.length ? allMyTweets : noTweets}
             </div>
             </div>
             {/* LIKED */}
@@ -413,7 +428,7 @@ function Profil() {
                 <h2 className={styles.titleProfil}>Likes</h2>
             </div>
             <div className={styles.tweetsContainer}>
-                {myLikes}
+                {allMyLikes.length ? allMyLikes : noLikes}
             </div>
             {/* MES LIKES => fetch get my likes avec populates */}
             </div>

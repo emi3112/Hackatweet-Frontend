@@ -287,8 +287,8 @@
 .h4 {
     font-family: Verdana;
     color: #fff;
-    font-size: 13px;  
-    margin: 5px 0 5px 0;
+    font-size: 15px;  
+    margin: 5px 0 10px 0;
 }
 
 .span {
@@ -369,6 +369,13 @@
 /* Handle on hover */
 .tweetsContainer::-webkit-scrollbar-thumb:hover {
   background: #888;
+}
+
+/* NO TWEETS  */
+.noTweets {
+    font-size: 20px;
+    color: #566573;
+    font-family: Verdana, serif;
 }
 /* ----------------------------------------------------- LIKE CONTAINER ------------------------------------------------------------------ */
 .likedContainer {

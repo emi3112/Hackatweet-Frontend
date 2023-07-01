@@ -185,15 +185,57 @@ border: solid 2px #17202A;
   padding: 5px 30px;
   height: 80px;
 }
-/* BUTTON POST TWEET */
+
+
+/* DIV POST TWEET */
 .divButton {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-right: 25px;
   margin-top: 10px;
   align-items: center;
 }
 
+/* GIF BUTTON */
+.gif{
+
+font-family: Verdana;
+font-weight: 0;
+font-size: 12px;
+color: #fff;
+background-color: #17202a;
+padding: 5px 8px;
+border: solid #ffffff 2px;
+box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+border-radius: 8px;
+transition : 1629ms;
+transform: translateY(0);
+display: flex;
+flex-direction: row;
+align-items: center;
+cursor: pointer;
+margin-left: 30px;
+}
+
+.gif:hover{
+
+transition : 1629ms;
+padding: 5px 8px;
+transform : translateY(-0px);
+background-color: #17202A;
+color: #0066cc;
+border: solid 2px #0066cc;
+}
+
+/* BUTTON COUNTER CONTAINER */
+.buttonCounterContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 120px;
+}
+/* BUTTON POST TWEET */
 .tweetButton{
 font-family: Roboto, sans-serif;
 font-weight: bold;
@@ -223,7 +265,8 @@ border: solid 2px #0066cc;
 
 .counter {
   color: #fff;
-  margin-right: 20px;
+  font-size: 12px;
+  /* margin-left: 350px; */
 }
 
 .text {

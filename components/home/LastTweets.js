@@ -70,7 +70,7 @@ function LastTweets(props) {
     // if true delete dans la db hashtags 
     if(handleHashtag(text)) {
       const hashtag = handleHashtag(text)
-      fetch(`http://localhost:3000/tweets/delete/${usernameDb}`, { 
+      fetch(`http://localhost:3000/tweets/delete`, { 
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({text})
@@ -80,7 +80,7 @@ function LastTweets(props) {
           // suprrime le tweet du reducer
           dispatch(removeLikeStore(tweet))
           // fetch pour suprrimer le hashtag de la db
-          fetch(`http://localhost:3000/hashtags/delete/${usernameDb}`,{
+          fetch(`http://localhost:3000/hashtags/delete`,{
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({name: hashtag})
@@ -160,11 +160,15 @@ function LastTweets(props) {
     }
   }
 
+  // HANDLE PROFILE PHOTO
+  const photoFront = useSelector((state) => state.user.value.imgFront)
+
+
   return (
     <div className={styles.tweet}>
         <div className={styles.logoInfos}>
           <div className={styles.userLogo}>
-            <Image src="/user.png" alt="LogoUser" width={70} height={70} />
+            <Image src={photoFront ? photoFront : '/user.png'} alt="LogoUser" width={60} height={60} style={{borderRadius: 50}}/>
           </div>
           <div className={styles.userInfos}>
             <span className={styles.p}>{firstname}</span>

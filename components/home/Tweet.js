@@ -96,15 +96,30 @@ export function Tweet(props) {
     }
   }
 
+  // HANDLE PHOTO PROFILE OTHER USER
+  const [ photoProfile, setPhotoProfile ] = useState('')
+  const fetchPhotoOtherUser = () => {
+    fetch(`http://localhost:3000/users/otherUserInfos/${props.username}`).then(response => response.json())
+    .then(data => {
+      if(data.result) {
+        console.log(data.userInfos)
+        setPhotoProfile(data.userInfos[0].photoProfileFront)
+      }
+    })
+  }
+  useEffect(() => {
+    fetchPhotoOtherUser()
+  }, []);
+
   return (
     <div className={styles.tweet}>
         <div className={styles.logoInfos}>
           <div className={styles.userLogo}>
-            <Image src="/user.png" alt="LogoUser" width={70} height={70} />
+            <Image src={photoProfile ? photoProfile : '/user.png'} alt="LogoUser" width={60} height={60} style={{borderRadius: 50}}/>
           </div>
           <div className={styles.userInfos}>
             <span className={styles.p}>{props.firstname}</span>
-            <span className={styles.p1}>{props.username}</span>
+            <span className={styles.p1}>@{props.username}</span>
             <span className={styles.p2}>{date}</span>
           </div>
         </div>
