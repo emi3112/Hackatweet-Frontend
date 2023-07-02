@@ -7,6 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faTrash } from '@fortawesome/free-solid-svg-icons';
 import moment from "moment";
 import { importTweet } from "../../reducers/tweets";
+// GIPHY
+import {
+  Grid,
+  Gif
+} from "@giphy/react-components";
 
 export function Tweet(props) {
 
@@ -125,6 +130,7 @@ export function Tweet(props) {
         </div>
         <div className={styles.paragraphe}>
           {text()}
+          {props.gif && <Gif gif={props.gif} width={300}/>}
         </div>
         <footer className={styles.footer_btn}>
         <FontAwesomeIcon  icon={faHeart} className={styles.heart} color={color} onClick={() => handleLikes(props)}/>

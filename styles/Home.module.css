@@ -227,6 +227,11 @@ color: #0066cc;
 border: solid 2px #0066cc;
 }
 
+.gifContainer {
+  display: flex;
+  justify-content: center;
+}
+
 /* BUTTON COUNTER CONTAINER */
 .buttonCounterContainer {
   display: flex;

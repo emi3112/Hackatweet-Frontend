@@ -9,6 +9,11 @@ import { removeLikeStore } from '../../reducers/tweets'
 import moment from "moment";
 import { importHashtags } from "../../reducers/hashtags";
 import { importTweet } from "../../reducers/tweets";
+// GIPHY
+import {
+  Grid,
+  Gif
+} from "@giphy/react-components";
 
 
 function LastTweets(props) {
@@ -17,7 +22,7 @@ function LastTweets(props) {
 
   // HANDLE USER DATA
   const user = useSelector((state) => state.user.value)
-  console.log('user from my tweets ==> ', user.firstname)
+  // console.log('user from my tweets ==> ', user.firstname)
 
   let username = `@${user.username}`
   let firstname = user.firstname
@@ -178,6 +183,7 @@ function LastTweets(props) {
         </div>
         <div className={styles.paragraphe}>
           {text()}
+          {props.gif && <Gif gif={props.gif} width={300}/>}
         </div>
       <footer className={styles.footer_btn}>
         <FontAwesomeIcon  icon={faHeart} className={styles.heart} color={color} onClick={() => handleLikes(props)}/>

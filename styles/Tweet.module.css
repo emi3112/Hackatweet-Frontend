@@ -1,6 +1,5 @@
 .tweet {
 	display: flex;
-	height: 180px;
 	background-color: #273746 ;
 	flex-direction: column;
 	border-bottom: 1px solid #273746;
@@ -51,11 +50,9 @@
 .paragraphe {
 	display: flex;
 	justify-content: flex-start;
-	align-items: center;
-	margin: 0  20px 0 20px;
-	height: 80px;
-	/* overflow: auto; */
+	margin: 0  20px 10px 20px;
 	max-width: 90%;
+	flex-direction: column;
 }
 
 .footer_btn {

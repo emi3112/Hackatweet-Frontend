@@ -171,7 +171,7 @@ function Profil() {
         p: 4,
         backgroundColor: '#17202A',
         borderRadius: 10,
-        overflow: 'auto',
+        // overflow: 'auto',
       };
 
 

@@ -17,6 +17,9 @@ import { addImgBack, addImgFront } from "../../reducers/user";
 // FONTAWESOME
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faGif } from '@fortawesome/free-solid-svg-icons';
+// MUI
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
 // ANT
 import { Input } from 'antd';
 import {
@@ -26,6 +29,14 @@ import {
   PlusCircleOutlined,
 } from '@ant-design/icons';
 import { Button, Menu } from 'antd';
+// GIF
+import { GiphyFetch } from "@giphy/js-fetch-api";
+import {
+  Grid,
+  Gif
+} from "@giphy/react-components";
+import ReactGiphySearchbox from "react-giphy-searchbox";
+import { useAsync } from "react-async-hook";
 
 
 function Home() {
@@ -35,7 +46,7 @@ function Home() {
 // ---------------------------------------------------------------- MENU CONTAINER ------------------------------------------------------------
 // HANDLE USER DATA
   const user = useSelector((state) => state.user.value)
-  console.log('user from reducer ==>',user)
+  // console.log('user from reducer ==>',user)
 
   let username = null
   let firstname = null
@@ -131,23 +142,117 @@ function Home() {
     });
   }
   
-  // HANDLE POST TWEET 
-  const [textTweet, setTextTweet] = useState('')
-  const counter = `${textTweet.length}/280`
-
+  
   // HANDLE HASHTAGS 
   // regex pour trouver les hashtags
   const hashtagsRegex = /#[a-z0-9_]+/
-
+  
   // fonction qui trouve l'hashtag
   const handleHashtag = (newhashtag) => {
     const test = hashtagsRegex.test(newhashtag)
     if(test) {
       const result = newhashtag.match(hashtagsRegex)
-        // return juste le hashatg du text 
-        return result[0]
+      // return juste le hashatg du text 
+      return result[0]
+    }
+  }
+  
+  // qaund init composant
+  useEffect(() => {
+    fetchHashtags()
+  }, []);
+  
+  // HANDLE ALL TWEET
+  useEffect(() => {
+    fetchAllTweets()
+  }, []);
+  
+  const allHashtags = useSelector((state) => state.hashtags.value)
+  // composants hashtags sur allhashtags
+  const hashatgs = allHashtags?.map((data, i) => {
+      return <Hashtag key={i} {...data} />
+  })
+  
+  const allTweets = useSelector((state) => state.tweets.value)
+  // console.log('alltweets after reducer ==>',allTweets)
+  // si my tweets with trash other no trash 
+  const tweets = allTweets?.map((data, i) => {
+    //  check si le tweet nous appartient
+    if(data.username === usernameDb) {
+      // console.log('data for render my tweets ==> ',data)
+      // si le username apparait en clé étrangère dans le tweet on met isLiked a true sinon false
+      if(data.whoLiked.length) {
+        const isLiked = data.whoLiked.some((e) => e.username === usernameDb)
+        if(isLiked) {
+          // récupère le isLiked en props 
+          return <LastTweets key={i} {...data} isLiked={true}/>
+        } 
+        else {
+          return <LastTweets key={i} {...data} isLiked={false}/>
+        }
+      } else {
+        // si il n'y a pas de like renvoie quand même le tweet
+        return <LastTweets key={i} {...data} isLiked={false}/>
+      }
+    } else {
+      if(data.whoLiked.length) {
+        // pareil pour les tweet qui ne lui appartiennent pas 
+        const isLiked = data.whoLiked.some((e) => e.username === usernameDb)
+        if(isLiked) {
+            // récupère le isLiked en props 
+            return <Tweet key={i} {...data} isLiked={true} />
+          } 
+          else {
+            return <Tweet key={i} {...data} isLiked={false}/>
+          }
+      } else {
+        // si il n'y a pas de like renvoie quand même le tweet
+        return <Tweet key={i} {...data} isLiked={false}/>
       }
     }
+  })
+
+  // handle modal post tweet
+  const [ isShowModal, setIsShowModal ] = useState(true)
+  
+  const handleSwhoModalTweet = () => {
+    setIsShowModal(!isShowModal)
+  }
+  
+  // handle modal GIF
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
+  
+  const handleModalUser = () => {
+    setOpen(true)
+  }
+  
+  const styleModal = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '40%',
+    height: '80%',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    backgroundColor: '#17202A',
+    borderRadius: 10,
+  };
+
+  // const giphyFetch = new GiphyFetch("Hi0n7z4ILNpCo9K1jo1Tyd7tTUzK4Jjm");
+  
+  const [gif, setGif] = useState(null)
+  
+  const handleAddGif = (gif) => {
+    handleClose()
+    setGif(gif)
+  }
+
+  // HANDLE POST TWEET 
+  const [textTweet, setTextTweet] = useState('')
+  const counter = `${textTweet.length}/280`
 
   // post new tweet in db 
   const handleTweet = () => {
@@ -155,7 +260,7 @@ function Home() {
       fetch('http://localhost:3000/tweets/newTweet', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firstname: firstname, username: usernameDb, date: null, text: textTweet, likes: 0 }),
+        body: JSON.stringify({ firstname: firstname, username: usernameDb, date: null, text: textTweet, likes: 0, gif: gif }),
       }).then(response => response.json())
       .then(data => {
         if (data.result) {
@@ -178,78 +283,21 @@ function Home() {
       })
       // met le text de l'input a vide après le post
       setTextTweet('')
+      setGif(null)
     }
+    setGif(null)
   };
   
-  // qaund init composant
-  useEffect(() => {
-    fetchHashtags()
-  }, []);
-  
-  // HANDLE ALL TWEET
-  useEffect(() => {
-    fetchAllTweets()
-  }, []);
-
-  const allHashtags = useSelector((state) => state.hashtags.value)
-  // composants hashtags sur allhashtags
-  const hashatgs = allHashtags?.map((data, i) => {
-      return <Hashtag key={i} {...data} />
-  })
-  
-  const allTweets = useSelector((state) => state.tweets.value)
-  // console.log('alltweets after reducer ==>',allTweets)
-  // si my tweets with trash other no trash 
-  const tweets = allTweets?.map((data, i) => {
-    //  check si le tweet nous appartient
-    if(data.username === usernameDb) {
-      console.log('data for render my tweets ==> ',data)
-      // si le username apparait en clé étrangère dans le tweet on met isLiked a true sinon false
-      if(data.whoLiked.length) {
-        const isLiked = data.whoLiked.some((e) => e.username === usernameDb)
-        if(isLiked) {
-          // récupère le isLiked en props 
-          return <LastTweets key={i} {...data} isLiked={true}/>
-        } 
-        else {
-          return <LastTweets key={i} {...data} isLiked={false}/>
-        }
-      } else {
-        // si il n'y a pas de like renvoie quand même le tweet
-        return <LastTweets key={i} {...data} isLiked={false}/>
-      }
-    } else {
-      if(data.whoLiked.length) {
-        // pareil pour les tweet qui ne lui appartiennent pas 
-        const isLiked = data.whoLiked.some((e) => e.username === usernameDb)
-          if(isLiked) {
-            // récupère le isLiked en props 
-            return <Tweet key={i} {...data} isLiked={true} />
-          } 
-          else {
-            return <Tweet key={i} {...data} isLiked={false}/>
-          }
-      } else {
-        // si il n'y a pas de like renvoie quand même le tweet
-        return <Tweet key={i} {...data} isLiked={false}/>
-      }
-    }
-  })
-
-  // handle modal post tweet
-  const [ isShowModal, setIsShowModal ] = useState(true)
-
-  const handleSwhoModalTweet = () => {
-    setIsShowModal(!isShowModal)
-  }
-
   const modalPostTweet = (
     <div className={styles.newTweet}>
       <div className={styles.postTweet}>
         <TextArea className={styles.text} placeholder="What's up ?" maxLength={280} onChange={(e) => setTextTweet(e.target.value)} value={textTweet}/>
       </div>
+      <div className={styles.gifContainer}>
+        {gif && <Gif gif={gif} width={200} />}
+      </div>
       <div className={styles.divButton}>
-        <button className={styles.gif}>GIF</button>
+        <button onClick={() => handleModalUser()} className={styles.gif}>GIF</button>
         <div className={styles.buttonCounterContainer}>
           <span className={styles.counter}>{counter}</span>
           <button className={styles.tweetButton} onClick={() => handleTweet()}>Tweet</button>
@@ -257,6 +305,7 @@ function Home() {
       </div>
     </div>)
 
+  
 
    return (
   <div className={styles.pageContainer}>
@@ -308,6 +357,24 @@ function Home() {
         </div>
       </div>
       {isShowModal && modalPostTweet}
+      {/* GIF MODAL */}
+      <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+      >
+        <Box sx={styleModal}>
+          <ReactGiphySearchbox
+            apiKey='Hi0n7z4ILNpCo9K1jo1Tyd7tTUzK4Jjm'
+            onSelect={(item) => handleAddGif(item)}
+            masonryConfig={[
+              { mq: "90px", columns: 3, imageWidth: 200, gutter: 5 }
+            ]}
+            gifListHeight={500}
+          />
+        </Box>
+      </Modal>
       <div className={styles.tweetsContainer}>
         {/* !!!!! gerer le responsive des tweet quand ils sont long */}
         {tweets}
